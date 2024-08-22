@@ -28,6 +28,7 @@ void correct_training(void)
          begin_input,  /* 入力の開始時刻 */
          end_input,    /* 入力の終了時刻 */
          input_time,   /* 入力時間 */
+         sum_input_time = 0,   /* 合計入力時間 */
          index,        /* 文字配列の添え字用 */
          error_cnt;        /* エラー文字数 */
   time_t t;     /* time関数用 */
@@ -57,7 +58,9 @@ void correct_training(void)
       end_input = time (&t);
       /* 入力時間による該当メッセージの表示処理 */
       input_time = end_input - begin_input;
+      sum_input_time += input_time;
       printf("time=%d  " , input_time);
+      printf("sum_time=%d  " , sum_input_time);
       printf("error count =%d\n", error_cnt);
       if (error_cnt == 0) {
          if (input_time <= GOOD_TIME)
