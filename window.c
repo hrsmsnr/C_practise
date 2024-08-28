@@ -40,7 +40,7 @@ int WINAPI WinMain(
     // ウィンドウを再描画
     UpdateWindow(hwnd);
 
-    MessageBox(hwnd, TEXT("ウィンドウを生成しました。"), TEXT(""), MB_OK);
+    MessageBox(hwnd, TEXT("text-a"), TEXT("window-title"), MB_OK);
 
     return 0;
 }
