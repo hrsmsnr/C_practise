@@ -7,20 +7,42 @@
 #define NG_TIME 40             /* 入力時間(NG) */
 #define MAX_INPUT_LENGTH 30    /* 入力の最大長 */
 
-char line_array[][30] = {
+char line_array1[][30] = {
     "I have some good news",
     "Let's do something fun"
 };
 
-void correct_training(void);
+char line_array2[][30] = {
+    "Have a good day",
+    "Enter a string"
+};
+
+void correct_training(char line_array[][30]); // 関数の引数に配列を追加
 
 int main(void) {
+    int choice;
+
     printf("＜タイピングゲーム開始＞\n");
-    correct_training();
+    printf("0: line_array1 を使う\n");
+    printf("1: line_array2 を使う\n");
+    printf("選択してください (0 または 1): ");
+    scanf("%d", &choice);
+
+    // 入力バッファに残った改行文字をクリア
+    getchar();
+
+    if (choice == 0) {
+        correct_training(line_array1);
+    } else if (choice == 1) {
+        correct_training(line_array2);
+    } else {
+        printf("無効な選択です。終了します。\n");
+    }
+
     return 0;
 }
 
-void correct_training(void) {
+void correct_training(char line_array[][30]) {
     int input_char,   /* キーボードからの入力データ（一文字） */
         count,        /* タイピング回数の計算用 */
         line,         /* 使用する手本文字列の判定用 */
@@ -32,7 +54,7 @@ void correct_training(void) {
         error_cnt;    /* エラー文字数 */
     time_t t;         /* time関数用 */
     char user_input[MAX_INPUT_LENGTH]; /* ユーザーの入力を保存する配列 */
-
+    
     for (count = 0; count < REPEAT; count++) {
         for (line = 0; line < TEHON_LINE_MAX_NUM; line++) {
             /* 手本文字列の出力と入力処理 */
