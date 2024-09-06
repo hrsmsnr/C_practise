@@ -1,23 +1,24 @@
 #include <windows.h>
 
-int WINAPI WinMain(
-    HINSTANCE hInstance, HINSTANCE hPrevInstance,
-    LPSTR lpszCmdLine, int nCmdShow)
-{
+// ウィンドウプロシージャの宣言
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLine, int nCmdShow) {
     TCHAR szAppName[] = TEXT("TestApp");
     WNDCLASS wc;
     HWND hwnd;
+    MSG msg;
 
     // ウィンドウクラスの属性を設定
-    wc.style         = CS_HREDRAW | CS_VREDRAW;
-    wc.lpfnWndProc   = DefWindowProc;
-    wc.cbClsExtra    = 0;
-    wc.cbWndExtra    = 0;
-    wc.hInstance     = hInstance;
-    wc.hIcon         = LoadIcon(NULL, IDI_APPLICATION);
-    wc.hCursor       = LoadCursor(NULL, IDC_ARROW);
-    wc.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
-    wc.lpszMenuName  = NULL;
+    wc.style = CS_HREDRAW | CS_VREDRAW;
+    wc.lpfnWndProc = WndProc;  // WndProcに変更
+    wc.cbClsExtra = 0;
+    wc.cbWndExtra = 0;
+    wc.hInstance = hInstance;
+    wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+    wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+    wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+    wc.lpszMenuName = NULL;
     wc.lpszClassName = szAppName;
 
     // ウィンドウクラスを登録
@@ -40,7 +41,43 @@ int WINAPI WinMain(
     // ウィンドウを再描画
     UpdateWindow(hwnd);
 
-    MessageBox(hwnd, TEXT("text-a"), TEXT("window-title"), MB_OK);
+    // メッセージループ
+    while (GetMessage(&msg, NULL, 0, 0)) {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
+
+    return (int)msg.wParam;
+}
+
+// ウィンドウプロシージャ
+LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
+    static HWND hEdit;  // テキストボックスのハンドル
+
+    switch (message) {
+    case WM_CREATE:
+        // テキストボックス（エディットコントロール）を作成
+        hEdit = CreateWindow(
+            TEXT("EDIT"),            // クラス名
+            TEXT(""),                // 初期テキスト
+            WS_CHILD | WS_VISIBLE | WS_BORDER | ES_LEFT, // スタイル
+            10, 10, 200, 20,         // 位置とサイズ (x, y, width, height)
+            hwnd,                    // 親ウィンドウのハンドル
+            NULL,                    // コントロールID（メニューやコマンドで使う）
+            (HINSTANCE)GetWindowLongPtr(hwnd, GWLP_HINSTANCE), // インスタンスハンドル
+            NULL);                   // 拡張情報
+
+        // メッセージボックスの表示
+        MessageBox(hwnd, TEXT("text-a"), TEXT("window-title"), MB_OK);
+        break;
+
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        break;
+
+    default:
+        return DefWindowProc(hwnd, message, wParam, lParam);
+    }
 
     return 0;
 }
