@@ -53,6 +53,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 // ウィンドウプロシージャ
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
     static HWND hEdit;  // テキストボックスのハンドル
+    static HWND hButton;  // OKボタンのハンドル
 
     switch (message) {
     case WM_CREATE:
@@ -67,8 +68,23 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) 
             (HINSTANCE)GetWindowLongPtr(hwnd, GWLP_HINSTANCE), // インスタンスハンドル
             NULL);                   // 拡張情報
 
-        // メッセージボックスの表示
-        MessageBox(hwnd, TEXT("text-a"), TEXT("window-title"), MB_OK);
+        // OKボタンを作成
+        hButton = CreateWindow(
+            TEXT("BUTTON"),          // クラス名
+            TEXT("OK"),              // ボタンのテキスト
+            WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, // スタイル
+            10, 40, 80, 30,          // 位置とサイズ (x, y, width, height)
+            hwnd,                    // 親ウィンドウのハンドル
+            (HMENU)1,                // コントロールID
+            (HINSTANCE)GetWindowLongPtr(hwnd, GWLP_HINSTANCE), // インスタンスハンドル
+            NULL);                   // 拡張情報
+        break;
+
+    case WM_COMMAND:
+        // OKボタンが押された場合の処理
+        if (LOWORD(wParam) == 1) {
+            MessageBox(hwnd, TEXT("OKボタンが押されました！"), TEXT("通知"), MB_OK);
+        }
         break;
 
     case WM_DESTROY:
