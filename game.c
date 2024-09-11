@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <time.h>
 
-#define REPEAT 2               /* ã‚¿ã‚¤ãƒ”ãƒ³ã‚°ç·´ç¿’å›æ•° */
-#define TEHON_LINE_MAX_NUM 2   /* æ‰‹æœ¬æ–‡å­—åˆ—ã®å€‹æ•° */
-#define GOOD_TIME 20           /* å…¥åŠ›æ™‚é–“(GOOD) */
-#define NG_TIME 40             /* å…¥åŠ›æ™‚é–“(NG) */
-#define MAX_INPUT_LENGTH 30    /* å…¥åŠ›ã®æœ€å¤§é•· */
+#define REPEAT 2               /* ƒ^ƒCƒsƒ“ƒO—ûK‰ñ” */
+#define TEHON_LINE_MAX_NUM 2   /* è–{•¶š—ñ‚ÌŒÂ” */
+#define GOOD_TIME 20           /* “ü—ÍŠÔ(GOOD) */
+#define NG_TIME 40             /* “ü—ÍŠÔ(NG) */
+#define MAX_INPUT_LENGTH 30    /* “ü—Í‚ÌÅ‘å’· */
+
+#pragma execution_character_set("utf-8")
 
 char line_array1[][30] = {
     "I have some good news",
@@ -17,18 +19,18 @@ char line_array2[][30] = {
     "Enter a string"
 };
 
-void correct_training(char line_array[][30]); // é–¢æ•°ã®å¼•æ•°ã«é…åˆ—ã‚’è¿½åŠ 
+void correct_training(char line_array[][30]); // ŠÖ”‚Ìˆø”‚É”z—ñ‚ğ’Ç‰Á
 
 int main(void) {
     int choice;
 
-    printf("ï¼œã‚¿ã‚¤ãƒ”ãƒ³ã‚°ã‚²ãƒ¼ãƒ é–‹å§‹ï¼\n");
-    printf("0: line_array1 ã‚’ä½¿ã†\n");
-    printf("1: line_array2 ã‚’ä½¿ã†\n");
-    printf("é¸æŠã—ã¦ãã ã•ã„ (0 ã¾ãŸã¯ 1): ");
+    printf("ƒƒ^ƒCƒsƒ“ƒOƒQ[ƒ€ŠJn„\n");
+    printf("0: line_array1 ‚ğg‚¤\n");
+    printf("1: line_array2 ‚ğg‚¤\n");
+    printf("‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢ (0 ‚Ü‚½‚Í 1): ");
     scanf("%d", &choice);
 
-    // å…¥åŠ›ãƒãƒƒãƒ•ã‚¡ã«æ®‹ã£ãŸæ”¹è¡Œæ–‡å­—ã‚’ã‚¯ãƒªã‚¢
+    // “ü—Íƒoƒbƒtƒ@‚Éc‚Á‚½‰üs•¶š‚ğƒNƒŠƒA
     getchar();
 
     if (choice == 0) {
@@ -36,37 +38,37 @@ int main(void) {
     } else if (choice == 1) {
         correct_training(line_array2);
     } else {
-        printf("ç„¡åŠ¹ãªé¸æŠã§ã™ã€‚çµ‚äº†ã—ã¾ã™ã€‚\n");
+        printf("–³Œø‚È‘I‘ğ‚Å‚·BI—¹‚µ‚Ü‚·B\n");
     }
 
     return 0;
 }
 
 void correct_training(char line_array[][30]) {
-    int input_char,   /* ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã‹ã‚‰ã®å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ï¼ˆä¸€æ–‡å­—ï¼‰ */
-        count,        /* ã‚¿ã‚¤ãƒ”ãƒ³ã‚°å›æ•°ã®è¨ˆç®—ç”¨ */
-        line,         /* ä½¿ç”¨ã™ã‚‹æ‰‹æœ¬æ–‡å­—åˆ—ã®åˆ¤å®šç”¨ */
-        begin_input,  /* å…¥åŠ›ã®é–‹å§‹æ™‚åˆ» */
-        end_input,    /* å…¥åŠ›ã®çµ‚äº†æ™‚åˆ» */
-        input_time,   /* å…¥åŠ›æ™‚é–“ */
-        sum_input_time = 0,   /* åˆè¨ˆå…¥åŠ›æ™‚é–“ */
-        index,        /* æ–‡å­—é…åˆ—ã®æ·»ãˆå­—ç”¨ */
-        error_cnt;    /* ã‚¨ãƒ©ãƒ¼æ–‡å­—æ•° */
-    time_t t;         /* timeé–¢æ•°ç”¨ */
-    char user_input[MAX_INPUT_LENGTH]; /* ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®å…¥åŠ›ã‚’ä¿å­˜ã™ã‚‹é…åˆ— */
+    int input_char,   /* ƒL[ƒ{[ƒh‚©‚ç‚Ì“ü—Íƒf[ƒ^iˆê•¶šj */
+        count,        /* ƒ^ƒCƒsƒ“ƒO‰ñ”‚ÌŒvZ—p */
+        line,         /* g—p‚·‚éè–{•¶š—ñ‚Ì”»’è—p */
+        begin_input,  /* “ü—Í‚ÌŠJn */
+        end_input,    /* “ü—Í‚ÌI—¹ */
+        input_time,   /* “ü—ÍŠÔ */
+        sum_input_time = 0,   /* ‡Œv“ü—ÍŠÔ */
+        index,        /* •¶š”z—ñ‚Ì“Y‚¦š—p */
+        error_cnt;    /* ƒGƒ‰[•¶š” */
+    time_t t;         /* timeŠÖ”—p */
+    char user_input[MAX_INPUT_LENGTH]; /* ƒ†[ƒU[‚Ì“ü—Í‚ğ•Û‘¶‚·‚é”z—ñ */
     
     for (count = 0; count < REPEAT; count++) {
         for (line = 0; line < TEHON_LINE_MAX_NUM; line++) {
-            /* æ‰‹æœ¬æ–‡å­—åˆ—ã®å‡ºåŠ›ã¨å…¥åŠ›å‡¦ç† */
+            /* è–{•¶š—ñ‚Ìo—Í‚Æ“ü—Íˆ— */
             printf("%s\n", line_array[line]);
             begin_input = time(&t);
             
-            /* å…¥åŠ›ã‚’é…åˆ—ã«ä¿å­˜ */
+            /* “ü—Í‚ğ”z—ñ‚É•Û‘¶ */
             index = 0;
             error_cnt = 0;
 
             while ((input_char = getchar()) != '\n' && index < MAX_INPUT_LENGTH - 1) {
-                user_input[index] = input_char; // ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®å…¥åŠ›ã‚’ä¿å­˜
+                user_input[index] = input_char; // ƒ†[ƒU[‚Ì“ü—Í‚ğ•Û‘¶
                 if (line_array[line][index] != '\0') {
                     if (input_char != line_array[line][index]) {
                         error_cnt++;
@@ -74,41 +76,41 @@ void correct_training(char line_array[][30]) {
                     index++;
                 }
             }
-            user_input[index] = '\0'; // å…¥åŠ›ã®çµ‚äº†ã‚’ç¤ºã™
+            user_input[index] = '\0'; // “ü—Í‚ÌI—¹‚ğ¦‚·
 
             end_input = time(&t);
-            /* å…¥åŠ›æ™‚é–“ã«ã‚ˆã‚‹è©²å½“ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®è¡¨ç¤ºå‡¦ç† */
+            /* “ü—ÍŠÔ‚É‚æ‚éŠY“–ƒƒbƒZ[ƒW‚Ì•\¦ˆ— */
             input_time = end_input - begin_input;
             sum_input_time += input_time;
             printf("time=%d  ", input_time);
             printf("sum_time=%d  ", sum_input_time);
             printf("error count=%d\n", error_cnt);
 
-            /* å…¥åŠ›ã¨æ­£è§£ã‚’æ¯”è¼ƒã—ã¦é–“é•ã„ã‚’è¡¨ç¤º */
+            /* “ü—Í‚Æ³‰ğ‚ğ”äŠr‚µ‚ÄŠÔˆá‚¢‚ğ•\¦ */
             printf("Correct: %s\n", line_array[line]);
             printf("Input:   %s\n", user_input);
             printf("         ");
             for (int i = 0; i < index; i++) {
                 if (line_array[line][i] != user_input[i]) {
-                    printf("^"); // é–“é•ã£ãŸæ–‡å­—ã®å ´æ‰€ã« ^ ã‚’è¡¨ç¤º
+                    printf("^"); // ŠÔˆá‚Á‚½•¶š‚ÌêŠ‚É ^ ‚ğ•\¦
                 } else {
-                    printf(" "); // æ­£ã—ã„å ´æ‰€ã«ã¯ã‚¹ãƒšãƒ¼ã‚¹
+                    printf(" "); // ³‚µ‚¢êŠ‚É‚ÍƒXƒy[ƒX
                 }
             }
             printf("\n");
 
             if (error_cnt == 0) {
                 if (input_time <= GOOD_TIME) {
-                    printf("ã™ã°ã‚‰ã—ã„ï¼\n");
+                    printf("‚·‚Î‚ç‚µ‚¢I\n");
                 } else {
                     if (input_time >= NG_TIME) {
-                        printf("ãŒã‚“ã°ã£ã¦ï¼\n");
+                        printf("‚ª‚ñ‚Î‚Á‚ÄI\n");
                     } else {
-                        printf("ãã®èª¿å­ï¼\n");
+                        printf("‚»‚Ì’²qI\n");
                     }
                 }
             } else {
-                printf("ã‚¿ã‚¤ãƒ—ãƒŸã‚¹ãŒã‚ã‚Šã¾ã™ã€‚\n");
+                printf("ƒ^ƒCƒvƒ~ƒX‚ª‚ ‚è‚Ü‚·B\n");
             }
         }
     }

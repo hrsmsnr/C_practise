@@ -1,6 +1,8 @@
 #include <windows.h>
 
-// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£ã®å®£è¨€
+#pragma execution_character_set("Shift JIS")
+
+// ƒEƒBƒ“ƒhƒEƒvƒƒV[ƒWƒƒ‚ÌéŒ¾
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLine, int nCmdShow) {
@@ -9,9 +11,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
     HWND hwnd;
     MSG msg;
 
-    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã®å±žæ€§ã‚’è¨­å®š
+    // ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚Ì‘®«‚ðÝ’è
     wc.style = CS_HREDRAW | CS_VREDRAW;
-    wc.lpfnWndProc = WndProc;  // WndProcã«å¤‰æ›´
+    wc.lpfnWndProc = WndProc;  // WndProc‚É•ÏX
     wc.cbClsExtra = 0;
     wc.cbWndExtra = 0;
     wc.hInstance = hInstance;
@@ -21,10 +23,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
     wc.lpszMenuName = NULL;
     wc.lpszClassName = szAppName;
 
-    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã‚’ç™»éŒ²
+    // ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚ð“o˜^
     if (!RegisterClass(&wc)) return 0;
 
-    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ä½œæˆ
+    // ƒEƒBƒ“ƒhƒE‚ðì¬
     hwnd = CreateWindow(
         szAppName, TEXT("Title"),
         WS_OVERLAPPEDWINDOW,
@@ -35,13 +37,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 
     if (!hwnd) return 0;
 
-    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’è¡¨ç¤º
+    // ƒEƒBƒ“ƒhƒE‚ð•\Ž¦
     ShowWindow(hwnd, nCmdShow);
 
-    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’å†æç”»
+    // ƒEƒBƒ“ƒhƒE‚ðÄ•`‰æ
     UpdateWindow(hwnd);
 
-    // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—
+    // ƒƒbƒZ[ƒWƒ‹[ƒv
     while (GetMessage(&msg, NULL, 0, 0)) {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
@@ -50,40 +52,40 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
     return (int)msg.wParam;
 }
 
-// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£
+// ƒEƒBƒ“ƒhƒEƒvƒƒV[ƒWƒƒ
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
-    static HWND hEdit;  // ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã®ãƒãƒ³ãƒ‰ãƒ«
-    static HWND hButton;  // OKãƒœã‚¿ãƒ³ã®ãƒãƒ³ãƒ‰ãƒ«
+    static HWND hEdit;  // ƒeƒLƒXƒgƒ{ƒbƒNƒX‚Ìƒnƒ“ƒhƒ‹
+    static HWND hButton;  // OKƒ{ƒ^ƒ“‚Ìƒnƒ“ƒhƒ‹
 
     switch (message) {
     case WM_CREATE:
-        // ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ï¼ˆã‚¨ãƒ‡ã‚£ãƒƒãƒˆã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ï¼‰ã‚’ä½œæˆ
+        // ƒeƒLƒXƒgƒ{ƒbƒNƒXiƒGƒfƒBƒbƒgƒRƒ“ƒgƒ[ƒ‹j‚ðì¬
         hEdit = CreateWindow(
-            TEXT("EDIT"),            // ã‚¯ãƒ©ã‚¹å
-            TEXT(""),                // åˆæœŸãƒ†ã‚­ã‚¹ãƒˆ
-            WS_CHILD | WS_VISIBLE | WS_BORDER | ES_LEFT, // ã‚¹ã‚¿ã‚¤ãƒ«
-            10, 10, 200, 20,         // ä½ç½®ã¨ã‚µã‚¤ã‚º (x, y, width, height)
-            hwnd,                    // è¦ªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ãƒãƒ³ãƒ‰ãƒ«
-            NULL,                    // ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«IDï¼ˆãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚„ã‚³ãƒžãƒ³ãƒ‰ã§ä½¿ã†ï¼‰
-            (HINSTANCE)GetWindowLongPtr(hwnd, GWLP_HINSTANCE), // ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒ³ãƒ‰ãƒ«
-            NULL);                   // æ‹¡å¼µæƒ…å ±
+            TEXT("EDIT"),            // ƒNƒ‰ƒX–¼
+            TEXT(""),                // ‰ŠúƒeƒLƒXƒg
+            WS_CHILD | WS_VISIBLE | WS_BORDER | ES_LEFT, // ƒXƒ^ƒCƒ‹
+            10, 10, 200, 20,         // ˆÊ’u‚ÆƒTƒCƒY (x, y, width, height)
+            hwnd,                    // eƒEƒBƒ“ƒhƒE‚Ìƒnƒ“ƒhƒ‹
+            NULL,                    // ƒRƒ“ƒgƒ[ƒ‹IDiƒƒjƒ…[‚âƒRƒ}ƒ“ƒh‚ÅŽg‚¤j
+            (HINSTANCE)GetWindowLongPtr(hwnd, GWLP_HINSTANCE), // ƒCƒ“ƒXƒ^ƒ“ƒXƒnƒ“ƒhƒ‹
+            NULL);                   // Šg’£î•ñ
 
-        // OKãƒœã‚¿ãƒ³ã‚’ä½œæˆ
+        // OKƒ{ƒ^ƒ“‚ðì¬
         hButton = CreateWindow(
-            TEXT("BUTTON"),          // ã‚¯ãƒ©ã‚¹å
-            TEXT("OK"),              // ãƒœã‚¿ãƒ³ã®ãƒ†ã‚­ã‚¹ãƒˆ
-            WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, // ã‚¹ã‚¿ã‚¤ãƒ«
-            10, 40, 80, 30,          // ä½ç½®ã¨ã‚µã‚¤ã‚º (x, y, width, height)
-            hwnd,                    // è¦ªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ãƒãƒ³ãƒ‰ãƒ«
-            (HMENU)1,                // ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ID
-            (HINSTANCE)GetWindowLongPtr(hwnd, GWLP_HINSTANCE), // ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒ³ãƒ‰ãƒ«
-            NULL);                   // æ‹¡å¼µæƒ…å ±
+            TEXT("BUTTON"),          // ƒNƒ‰ƒX–¼
+            TEXT("OK"),              // ƒ{ƒ^ƒ“‚ÌƒeƒLƒXƒg
+            WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, // ƒXƒ^ƒCƒ‹
+            10, 40, 80, 30,          // ˆÊ’u‚ÆƒTƒCƒY (x, y, width, height)
+            hwnd,                    // eƒEƒBƒ“ƒhƒE‚Ìƒnƒ“ƒhƒ‹
+            (HMENU)1,                // ƒRƒ“ƒgƒ[ƒ‹ID
+            (HINSTANCE)GetWindowLongPtr(hwnd, GWLP_HINSTANCE), // ƒCƒ“ƒXƒ^ƒ“ƒXƒnƒ“ƒhƒ‹
+            NULL);                   // Šg’£î•ñ
         break;
 
     case WM_COMMAND:
-        // OKãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸå ´åˆã®å‡¦ç†
+        // OKƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½ê‡‚Ìˆ—
         if (LOWORD(wParam) == 1) {
-            MessageBox(hwnd, TEXT("OKãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚Œã¾ã—ãŸï¼"), TEXT("é€šçŸ¥"), MB_OK);
+            MessageBox(hwnd, TEXT("OKƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ü‚µ‚½I"), TEXT("’Ê’m"), MB_OK);
         }
         break;
 
