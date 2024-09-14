@@ -58,6 +58,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) 
     static HWND hButton;  // OKボタンのハンドル
 
     switch (message) {
+    
     case WM_CREATE:
         // テキストボックス（エディットコントロール）を作成
         hEdit = CreateWindow(
